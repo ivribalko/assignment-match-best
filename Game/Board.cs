@@ -17,9 +17,6 @@ namespace Game
 
         internal void SetJewel(int x, int y, JewelKind kind) => this.jewels[x, y] = kind;
 
-        internal Move CalculateBestMoveForBoard()
-        {
-            return default;
-        }
+        internal Move CalculateBestMoveForBoard() => Predict.BestMove(this.jewels).Value;
     }
 }
