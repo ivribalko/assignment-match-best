@@ -2,17 +2,20 @@ namespace Game
 {
     internal class Board
     {
-        internal int GetWidth() => 3;
-        internal int GetHeight() => 3;
+        private readonly JewelKind[,] jewels;
 
-        internal JewelKind GetJewel(int x, int y)
+        internal Board(JewelKind[,] jewels)
         {
-            return default;
+            this.jewels = jewels;
         }
 
-        internal void SetJewel(int x, int y, JewelKind kind)
-        {
-        }
+        internal int GetWidth() => this.jewels.GetLength(0);
+
+        internal int GetHeight() => this.jewels.GetLength(1);
+
+        internal JewelKind GetJewel(int x, int y) => this.jewels[x, y];
+
+        internal void SetJewel(int x, int y, JewelKind kind) => this.jewels[x, y] = kind;
 
         internal Move CalculateBestMoveForBoard()
         {
