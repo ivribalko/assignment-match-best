@@ -31,7 +31,7 @@ namespace Game
                         {
                             Apply(move, jewels);
 
-                            var score = Score(jewels);
+                            var score = jewels.GetScore();
 
                             if (result.score < score)
                             {
@@ -51,14 +51,6 @@ namespace Game
         }
 
         /// <summary>
-        /// Count matched jewels.
-        /// </summary>
-        private static int Score(JewelKind[,] jewels)
-        {
-            return 0;
-        }
-
-        /// <summary>
         /// Update jewels array according to move.
         /// </summary>
         private static void Apply(Move move, JewelKind[,] jewels)
@@ -68,6 +60,7 @@ namespace Game
             var save = jewels[x, y];
 
             jewels[x, y] = jewels[move.X, move.Y];
+
             jewels[move.X, move.Y] = save;
         }
 

@@ -11,9 +11,9 @@ namespace Game
         {
             this.jewels = jewels;
 
-            Debug.Assert(jewels
-                .Cast<JewelKind>()
-                .All(j => j != JewelKind.Empty));
+            Debug.Assert(jewels.GetScore() == 0);
+
+            Debug.Assert(jewels.Cast<JewelKind>().All(j => j != JewelKind.Empty));
         }
 
         internal int GetWidth() => this.jewels.GetLength(0);
