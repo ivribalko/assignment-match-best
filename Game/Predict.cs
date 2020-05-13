@@ -15,33 +15,88 @@ namespace Game
             var maxx = jewels.GetLength(0);
             var maxy = jewels.GetLength(1);
 
-            for (int x = 0; x < maxx; x++)
+            var result = (score: 0, move: default(Move));
+
+            // TODO no dupe checks
+
+            for (var x = 0; x < maxx; x++)
             {
-                for (int y = 0; y < maxy; y++)
+                for (var y = 0; y < maxy; y++)
                 {
                     foreach (var direction in Directions)
                     {
-                        var location = Move(x, y, direction);
+                        var move = new Move(x, y, direction);
 
-                        if (Valid(location, maxx, maxy))
+                        if (Valid(move, maxx, maxy))
                         {
+                            Apply(move, jewels);
 
+                            var score = Score(jewels);
+
+                            if (result.score < score)
+                            {
+                                result.score = score;
+                                result.move = move;
+                            }
+
+                            Apply(Reverse(move), jewels);
                         }
                     }
                 }
             }
 
-            return null;
+            return result.score > 0
+                ? result.move
+                : (Move?)null;
         }
 
-        private static bool Valid((int x, int y) coordinates, int maxx, int maxy) =>
-            coordinates.x >= 0 &&
-            coordinates.y >= 0 &&
-            coordinates.x < maxx &&
-            coordinates.y < maxy;
+        /// <summary>
+        /// Count matched jewels.
+        /// </summary>
+        private static int Score(JewelKind[,] jewels)
+        {
+            return 0;
+        }
 
-        private static (int x, int y) Move(int x, int y, MoveDirection direction) =>
-            direction switch
+        /// <summary>
+        /// Update jewels array according to move.
+        /// </summary>
+        private static void Apply(Move move, JewelKind[,] jewels)
+        {
+            var (x, y) = GetApplied(move);
+
+            var save = jewels[x, y];
+
+            jewels[x, y] = jewels[move.X, move.Y];
+            jewels[move.X, move.Y] = save;
+        }
+
+        private static bool Valid(Move move, int maxx, int maxy)
+        {
+            var (x, y) = GetApplied(move);
+
+            return x >= 0 &&
+                   y >= 0 &&
+                   x < maxx &&
+                   y < maxy;
+        }
+
+        private static Move Reverse(Move move)
+        {
+            var (x, y) = GetApplied(move);
+
+            var direction = move.Direction.Reverse();
+
+            return new Move(x, y, direction);
+        }
+
+        private static (int x, int y) GetApplied(Move move)
+        {
+            var x = move.X;
+            var y = move.Y;
+            var direction = move.Direction;
+
+            return direction switch
             {
                 MoveDirection.Up    => (x, y + 1),
                 MoveDirection.Down  => (x, y - 1),
@@ -49,5 +104,6 @@ namespace Game
                 MoveDirection.Right => (x + 1, y),
                 _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
             };
+        }
     }
 }

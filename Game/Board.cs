@@ -1,3 +1,6 @@
+using System.Diagnostics;
+using System.Linq;
+
 namespace Game
 {
     internal class Board
@@ -7,6 +10,10 @@ namespace Game
         internal Board(JewelKind[,] jewels)
         {
             this.jewels = jewels;
+
+            Debug.Assert(jewels
+                .Cast<JewelKind>()
+                .All(j => j != JewelKind.Empty));
         }
 
         internal int GetWidth() => this.jewels.GetLength(0);
