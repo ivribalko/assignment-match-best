@@ -12,16 +12,16 @@ namespace Game
 
         private static void AssertCorrectMoveOne()
         {
-            var color1 = JewelKind.Blue;
-            var color2 = JewelKind.Green;
-            var color3 = JewelKind.Violet;
-            var color4 = JewelKind.Indigo;
+            var b = JewelKind.Blue;
+            var g = JewelKind.Green;
+            var v = JewelKind.Violet;
+            var i = JewelKind.Indigo;
 
             var array = new [,]
             {
-                { color1, color2, color3 },
-                { color1, color2, color3 },
-                { color2, color1, color4 },
+                { b, g, v, },
+                { b, g, v, },
+                { g, b, i, },
             };
 
             var board = new Board(array);
@@ -35,17 +35,17 @@ namespace Game
 
         private static void AssertCorrectMoveTwo()
         {
-            var color1 = JewelKind.Blue;
-            var color2 = JewelKind.Green;
-            var color3 = JewelKind.Violet;
-            var color4 = JewelKind.Indigo;
+            var b = JewelKind.Blue;
+            var g = JewelKind.Green;
+            var v = JewelKind.Violet;
+            var i = JewelKind.Indigo;
 
             var array = new [,]
             {
-                { color3, color4, color4, color2, },
-                { color4, color3, color3, color1, },
-                { color4, color1, color4, color4, },
-                { color1, color4, color1, color1, },
+                { v, i, i, g, },
+                { i, v, v, b, },
+                { i, b, i, i, },
+                { b, i, b, b, },
             };
 
             var board = new Board(array);
